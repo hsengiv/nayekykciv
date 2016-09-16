@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="testing" basedir="." default="begin">
+	<target name="begin" depends="warcreation"></target>
+	<path id="allclasspath">
+	      <fileset dir="../web/WEB-INF/lib">
+	         <include name="*.jar"/>
+	      </fileset>
+		  <fileset dir="../tomcatlib">
+		  	<include name="*.jar"/>
+		  </fileset>
+	      <pathelement path="./source"/>
+	</path>
+	<target name="compilejava">
+		<mkdir dir="./source" />
+		<javac destdir="./source" source="1.5" target="1.5" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="../src"></src>
+			<classpath refid="allclasspath" />
+		</javac>
+	</target>
+	<target name="jarcreation" depends="compilejava">
+		<jar destfile="../web/WEB-INF/lib/source.jar" basedir="./source" includes="**/*.class"></jar>
+	</target>
+	<target name="warcreation" depends="jarcreation">
+		<war destfile="ROOT.war" webxml="../web/WEB-INF/web.xml">
+		   <fileset dir="../web">
+		      <include name="**/*.*"/>
+		   </fileset>
+		</war>
+	</target>
+</project>
