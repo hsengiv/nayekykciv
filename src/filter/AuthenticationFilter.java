@@ -29,6 +29,10 @@ public class AuthenticationFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String requestUri = httpRequest.getRequestURI();
 		
+		if(requestUri.endsWith(".js")){
+			chain.doFilter(request, response);
+			return;
+		}
 		/*
 		 * For empty URI we should redirect to index pag
 		 */
