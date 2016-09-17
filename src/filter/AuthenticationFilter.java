@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import common.Constants;
 public class AuthenticationFilter implements Filter {
 
 	@Override
@@ -45,7 +47,7 @@ public class AuthenticationFilter implements Filter {
 		 * 1) username cookie in session
 		 * 2) that username should be in database
 		 */
-		if(currentSession != null && currentSession.getAttribute("username") != null){
+		if(currentSession != null && currentSession.getAttribute(Constants.USERNAME_FOR_SESSION) != null){
 			isAuthenticated = true;
 		}
 		/*

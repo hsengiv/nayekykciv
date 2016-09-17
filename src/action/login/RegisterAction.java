@@ -3,6 +3,8 @@ package action.login;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 
+import common.Constants;
+
 import action.ActionClassParent;
 
 public class RegisterAction extends ActionClassParent{
@@ -13,7 +15,7 @@ public class RegisterAction extends ActionClassParent{
 			userName = request.getParameter("username").toString();
 		}
 		if(userName != null){
-			curSession.setAttribute("username", userName);
+			curSession.setAttribute(Constants.USERNAME_FOR_SESSION, userName);
 			return "success";
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/error.knv");
