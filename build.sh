@@ -1,6 +1,6 @@
 rm -rf ../temp
 mkdir ../temp
-cp ./* -rf ../temp
+cp -r ./* ../temp
 cd ../temp/build
 ant
 cp ROOT.war ../../
