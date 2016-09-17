@@ -2,6 +2,8 @@ package action.login;
 
 import javax.servlet.http.HttpSession;
 
+import common.CommonUtil;
+
 import action.ActionClassParent;
 
 public class LogoutAction extends ActionClassParent{
@@ -10,6 +12,7 @@ public class LogoutAction extends ActionClassParent{
 		if(curSession != null){
 			curSession.invalidate();
 		}
-		return "success";
+		CommonUtil.writeResponse(response, "success");
+		return null;
 	}
 }

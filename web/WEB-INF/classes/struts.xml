@@ -10,14 +10,10 @@
 		<action name="index"><result>/jsp/home/home.jsp</result></action>
 		
 		<action name="login"><result></result></action>
-		<action name="register" class="action.login.RegisterAction">
-			<result name="success">/jsp/home/home.jsp</result>
-		</action>
+		<action name="register" class="action.login.RegisterAction"></action>
 		<action name="signup"><result>/jsp/login/signup.jsp</result></action>
 		<action name="signin"><result>/jsp/login/signin.jsp</result></action>
 		<action name="error"><result>/jsp/common/error.jsp</result></action>
-		<action name="logout" class="action.login.LogoutAction">
-			<result name="success">/jsp/login/signin.jsp</result>
-		</action>
+		<action name="logout" class="action.login.LogoutAction"></action>
 	</package>
 </struts>    
