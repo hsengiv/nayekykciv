@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-<package name="default" namespace="/" extends="struts-default">
-<action name="testing" class="testing.Testing">
-<result name="success">/index.jsp</result>
-<result name="failure">/jsp/error.jsp</result>
-</action>
-</package>
+	<package name="default" namespace="/" extends="struts-default">
+		<action name="testing" class="testing.Testing">
+			<result name="success">/jsp/home/home.jsp</result>
+			<result name="failure">/jsp/common/error.jsp</result>
+		</action>
+		<action name="/"><result>/jsp/home/home.jsp</result></action>
+		<action name="index"><result>/jsp/home/home.jsp</result></action>
+		
+		<action name="login"><result></result></action>
+		<action name="register" class="action.login.RegisterAction">
+			<result name="success">/jsp/home/home.jsp</result>
+		</action>
+		<action name="signup"><result>/jsp/login/signup.jsp</result></action>
+		<action name="signin"><result>/jsp/login/signin.jsp</result></action>
+		<action name="error"><result>/jsp/common/error.jsp</result></action>
+		<action name="logout" class="action.login.LogoutAction">
+			<result name="success">/jsp/login/signin.jsp</result>
+		</action>
+	</package>
 </struts>    
