@@ -29,7 +29,7 @@ public class AuthenticationFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String requestUri = httpRequest.getRequestURI();
 		
-		if(requestUri.endsWith(".js")){
+		if(requestUri.endsWith(".js") || requestUri.enendsWith(".css")){
 			chain.doFilter(request, response);
 			return;
 		}

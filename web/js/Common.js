@@ -9,3 +9,7 @@ Common.doAjax = function(data){
 		$.ajax(data);
 	}
 }
+
+Common.showMessage = function(message){
+	alert(message);
+}
