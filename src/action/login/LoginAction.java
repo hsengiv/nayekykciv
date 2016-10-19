@@ -1,16 +1,17 @@
 package action.login;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
 import util.UserUtil;
+
 import common.CommonUtil;
 import common.Constants;
+
 import action.ActionClassParent;
 
-public class RegisterAction extends ActionClassParent{
+public class LoginAction extends ActionClassParent{
 	public String execute()throws Exception{
 		HttpSession curSession = request.getSession(true);
 		String userName = null;
@@ -25,11 +26,15 @@ public class RegisterAction extends ActionClassParent{
 			password = request.getParameter("password");
 		}
 		if(userName != null && password != null){
-			if(!UserUtil.isUserNameExist(userName) && UserUtil.addNewUser(userName, password)){
+			if(UserUtil.isValidUser(userName, password)){
 				curSession.setAttribute(Constants.USERNAME_FOR_SESSION, userName);
 				status =  "success";
 			}else{
-				message = "Username already exists :(";
+				if(UserUtil.isUserNameExist(userName)){
+					message = "Wrong password. Please try again";
+				}else{
+					message = "user name doesnot  exist";
+				}
 			}
 		}else{
 			message = "Something went wrong! Please try again after sometime";

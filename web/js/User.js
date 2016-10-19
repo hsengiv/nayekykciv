@@ -1,12 +1,14 @@
 function User(){}
 
 User.signUp = function(){
-	if(!User.validateSignUpForm()){
+	if(!User.validateSignUpForm("signup")){
 		return;
 	}
 	var userName = $('#usernametextfield').val();
+	var password = $('#primarypasswordfield').val();
 	var fd = new FormData();
 	fd.append("username",userName);
+	fd.append("password",password);
 	var ajaxData = {
 			type : "POST",
 			url : "/register.knv",
@@ -18,28 +20,67 @@ User.signUp = function(){
 				}else if(data.message !== undefined && $.trim(data.message) !== ""){
 					Common.showMessage(data.message);
 					$('#usernametextfield').val("");
+					$('#primarypasswordfield').val("");
+					$('#confirmpasswordfield').val("");
 				}else{
 					Common.showMessage("Sorry! Cannot register now");
 					$('#usernametextfield').val("");
+					$('#primarypasswordfield').val("");
+					$('#confirmpasswordfield').val("");
 				}
 			},
 			error : function(){
 				Common.showMessage("Sorry! Cannot register now");
 				$('#usernametextfield').val("");
+				$('#primarypasswordfield').val("");
+				$('#confirmpasswordfield').val("");
+			}
+	};
+	Common.doAjax(ajaxData);
+}
+
+User.signIn = function(){
+	if(!User.validateSignUpForm("signin")){
+		return;
+	}
+	var userName = $('#usernametextfield').val();
+	var password = $('#primarypasswordfield').val();
+	var fd = new FormData();
+	fd.append("username",userName);
+	fd.append("password",password);
+	var ajaxData = {
+			type : "POST",
+			url : "/login.knv",
+			dataType : "json",
+			data : fd,
+			success : function(data){
+				if(data.status !== undefined && data.status == "success"){
+					window.open("/index.knv","_self");
+				}else if(data.message !== undefined && $.trim(data.message) !== ""){
+					Common.showMessage(data.message);
+					$('#usernametextfield').val("");
+					$('#primarypasswordfield').val("");
+				}else{
+					Common.showMessage("Sorry! Cannot login now");
+					$('#usernametextfield').val("");
+					$('#primarypasswordfield').val("");
+				}
+			},
+			error : function(){
+				Common.showMessage("Sorry! Cannot login now");
+				$('#usernametextfield').val("");
+				$('#primarypasswordfield').val("");
 			}
 	};
 	Common.doAjax(ajaxData);
 }
 
 User.validateSignUpForm = function(type){
-	if(type === undefined){
-		type = "all";
-	}
 	var canSignup = true;
 	var userName = $('#usernametextfield').val();
 	var conPass = $('#confirmpasswordfield').val();
 	var priPass = $('#primarypasswordfield').val();
-	if(type === "all" || type === "username"){
+	if(type === "signup" || type === "signin" || type === "username"){
 		if(userName === undefined || $.trim(userName) === ""){
 			$("#usernamelabel").text("*username cannot be empty");
 			canSignup =  false;
@@ -47,7 +88,7 @@ User.validateSignUpForm = function(type){
 			$("#usernamelabel").text('');
 		}
 	}
-	if(type === "all" || type === "password"){
+	if(type === "signup" || type === "signin" || type === "password"){
 		if(priPass === undefined || $.trim(priPass) === ""){
 			$("#primarypasswordlabel").text("*password cannot be empty");
 			canSignup =  false;
@@ -58,7 +99,7 @@ User.validateSignUpForm = function(type){
 			$("#primarypasswordlabel").text('');
 		}
 	}
-	if(type === "all" || type === "confirmpassword"){
+	if(type === "signup" || type === "confirmpassword"){
 		if(conPass !== priPass){
 			$("#confirmpasswordlabel").text("*password did not match");
 			canSignup =  false;

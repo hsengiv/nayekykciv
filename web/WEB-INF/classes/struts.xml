@@ -9,7 +9,7 @@
 		<action name="/"><result>/jsp/home/home.jsp</result></action>
 		<action name="index"><result>/jsp/home/home.jsp</result></action>
 		
-		<action name="login"><result></result></action>
+		<action name="login" class="action.login.LoginAction"></action>
 		<action name="register" class="action.login.RegisterAction"></action>
 		<action name="signup"><result>/jsp/login/signup.jsp</result></action>
 		<action name="signin"><result>/jsp/login/signin.jsp</result></action>
