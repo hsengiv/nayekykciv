@@ -1,5 +1,5 @@
 function User(){}
-
+User.userName = undefined;
 User.signUp = function(){
 	if(!User.validateSignUpForm("signup")){
 		return;
