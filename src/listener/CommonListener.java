@@ -5,25 +5,25 @@ import javax.servlet.ServletContextListener;
 
 import common.CommonUtil;
 
-public class CommonListener implements ServletContextListener{
+public class CommonListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
-		try{
-			
-		}catch(Exception e){
-			
+		try {
+
+		} catch (Exception e) {
+
 		}
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
-		try{
+		try {
 			CommonUtil.loadCommonProperties();
-		}catch(Exception e){
-			
+		} catch (Exception e) {
+
 		}
 	}
 

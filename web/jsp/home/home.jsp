@@ -6,7 +6,7 @@
 <script src="/js/Socket.js"></script>
 </head>
 <body>
-<script>
+	<script>
 <%
 if(session.getAttribute("username") != null){
 	%> User.userName = '<%=session.getAttribute("username")%>';
@@ -14,11 +14,11 @@ if(session.getAttribute("username") != null){
 %>
 Socket.connect();
 </script>
-<%=session.getAttribute("username")%><input type="button" onclick="User.logOut()" value="Logout" />
-<br>
-Enter message : <input type="text" id="messagetextbox" onkeyup="Socket.sendMessage(event)"></input>
-	<div id="messagecontainer">
-		
-	</div>
+	<%=session.getAttribute("username")%><input type="button"
+		onclick="User.logOut()" value="Logout" />
+	<br> Enter message :
+	<input type="text" id="messagetextbox"
+		onkeyup="Socket.sendMessage(event)"></input>
+	<div id="messagecontainer"></div>
 </body>
 </html>
