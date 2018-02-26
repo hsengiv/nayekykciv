@@ -128,3 +128,9 @@ User.logOut = function(){
 	Common.doAjax(ajaxData);
 	
 }
+
+User.init = function(){
+	Topic.fetchConnectedTopics();
+	Topic.fetchAvailableTopics();
+}
+

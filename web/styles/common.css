@@ -1,2 +1,32 @@
-.redTxt {color:red}
-.borderNone {border:none}
+.redTxt {
+	color: red
+}
+
+.borderNone {
+	border: none
+}
+
+.fL {
+	float: left;
+}
+
+.fR {
+	float: right;
+}
+
+.pT12 {
+	padding-top: 12px;
+}
+
+.pR30 {
+	padding-right: 30px;
+}
+
+.pL10 {
+	padding-left: 10px
+}
+
+.pR5 {
+	padding-right: 5px;
+}
+

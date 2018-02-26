@@ -10,7 +10,7 @@ Topic.create = function(){
 				dataType : "json",
 				data : fd,
 				success : function(data){
-					
+					window.location.reload();//temp
 				},
 				error : function(){
 					Common.showMessage("Sorry! Cannot register now");
@@ -83,6 +83,7 @@ Topic.fetchAvailableTopics = function(){
 							$(divElement).append(joinDiv);
 							$(joinDiv).addClass("availableTopicJoinButton");
 							$(joinDiv).text("Join");
+							$(joinDiv).attr("onclick","Topic.joinTopic("+topicJson.topicid+")");
 							$(spanElement).text(topicJson.title);
 							$("#availabletopiclist").append(liElement);
 						}
@@ -94,4 +95,23 @@ Topic.fetchAvailableTopics = function(){
 			}
 	};
 	Common.doAjax(ajaxData);
+}
+
+Topic.joinTopic = function(topicId){
+	var fd = new FormData();
+	fd.append("topicId",topicId);
+	var ajaxData = {
+				type : "POST",
+				url : "/jointopic.knv",
+				dataType : "json",
+				data : fd,
+				success : function(data){
+					window.location.reload();//temp
+				},
+				error : function(){
+					Common.showMessage("Sorry! Cannot register now");
+					
+				}
+		};
+		Common.doAjax(ajaxData);
 }
