@@ -15,6 +15,7 @@ if(session.getAttribute("username") != null){
 <script src="/js/User.js"></script>
 <script src="/js/Socket.js"></script>
 <script src="/js/topic.js"></script>
+<script src="/js/message.js"></script>
 
 <!-- styles -->
 <link href="/styles/common.css" rel="stylesheet" type="text/css" />
@@ -50,15 +51,34 @@ if(session.getAttribute("username") != null){
 
 			<div class="mytopiclistDiv" style="border-top: black;border-style: solid;border-left: none;border-bottom: none; border-right: none;">
 				<ul id="joinedtopiclist">
-					<li class="header">
+					<li class="topicheader">
 						Your participation
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="fL middleContainer"></div>
+		<div class="fL middleContainer" id="chatContainer">
+			
+			<div class="middleContainerTopicTitle" id="currentChatTopicTitle"></div>
+
+			<div style="float: left;width: 100%;height: 85%;">
+
+
+				<div style="float: left; height: 80%;width: 100%;">
+					<ul id="messagesList">
+					</ul>
+				</div>
+
+
+				<div style="float: left;bottom: 0px;width: 100%;height: 20%;">
+					<input onkeyup="Message.sendMessageOnEnter(event)" id="messageinputbox" type="text" style="width: 100%;height: 100%;">
+
+				</div>
+			</div>
+			
+		</div>
 		<div class="fL availableTopicContainer">
-    		<div><ul id="availabletopiclist"><li class="topicheader">Available Topics</li><li class="availabletopiclist"><div><span class="fL">Hello</span><div class="availableTopicJoinButton">Join</div></div></li></ul></div>
+    		<div><ul id="availabletopiclist"><li class="topicheader">Available Topics</li></ul></div>
 </div>
 	</div>
 </body>

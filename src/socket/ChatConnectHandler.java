@@ -1,6 +1,7 @@
 package socket;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -10,30 +11,49 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/chat/connect/{name}")
+import org.json.JSONObject;
+
+import user.User;
+import util.MessageUtil;
+import util.UserUtil;
+
+@ServerEndpoint(value = "/chat/connect/{id}")
 public class ChatConnectHandler {
 	private Session session;
+	private String id;
+	private String userName;
 	private String name;
-	private static ArrayList<ChatConnectHandler> connections = new ArrayList<ChatConnectHandler>();
+	private static HashMap<String,ArrayList<ChatConnectHandler>> connections = new HashMap<String,ArrayList<ChatConnectHandler>>();
 
 	@OnOpen
-	public void open(@PathParam("name") String name, Session session) {
-		this.name = name;
+	public void open(@PathParam("id") String id, Session session) {
+		this.id = id;
 		this.session = session;
-		connections.add(this);
-		ChatConnectHandler.sendToAll(name + " joined room");
+		User user = UserUtil.getUserObjectUID(id);
+		this.name = user.getName();
+		this.userName = user.getUname();
+		addSession(this);
 	}
 
 	@OnClose
 	public void close() {
-		ChatConnectHandler.sendToAll(this.name + " left the room");
+		removeSession(this);
 	}
 
 	@OnMessage
 	public void message(String message) {
 		try {
 
-			ChatConnectHandler.sendToAll(this.name + " : " + message);
+			JSONObject messageJson = new JSONObject(message);
+			messageJson.put("sendername", this.name);
+			messageJson.put("senderusername", this.userName);
+			messageJson.put("senderid", this.id);
+			if(messageJson.has("type")){
+				String type =  messageJson.getString("type");
+				if(type.equals("topicmessage")){
+					MessageUtil.handleTopicMessages(messageJson);
+				}
+			}
 		} catch (Exception e) {
 
 		}
@@ -41,16 +61,48 @@ public class ChatConnectHandler {
 
 	@OnError
 	public void onError(Throwable t) throws Throwable {
-		ChatConnectHandler.sendToAll(this.name + " left the room");
+		removeSession(this);
 	}
 
-	public static void sendToAll(String message) {
-		for (ChatConnectHandler obj : connections) {
-			try {
-				obj.session.getBasicRemote().sendText(message);
-			} catch (Exception e) {
-
+	
+	public static void sendMessageToUserList(ArrayList<String> userIds,String message){
+		try{
+			for(String userId : userIds){
+				if(connections.containsKey(userId)){
+					ArrayList<ChatConnectHandler> sessionList = connections.get(userId);
+					for(ChatConnectHandler obj : sessionList){
+						obj.session.getBasicRemote().sendText(message);
+					}
+				}
 			}
+		}catch(Exception e){
+			
 		}
+	}
+	public static void addSession(ChatConnectHandler obj){
+		try{
+			if(obj.connections.containsKey(obj.id)){
+				obj.connections.get(obj.id).add(obj);;
+			}else{
+				ArrayList<ChatConnectHandler> connectionsList = new ArrayList<ChatConnectHandler>();
+				connectionsList.add(obj);
+				connections.put(obj.id, connectionsList);
+			}
+		}catch(Exception e){
+			
+		}
+	}
+	public static void removeSession(ChatConnectHandler currObj){
+		try{
+			ArrayList<ChatConnectHandler> list = currObj.connections.get(currObj.id);
+			for(ChatConnectHandler obj : list){
+				if(currObj.session.equals(obj.session)){
+					list.remove(obj);
+				}
+			}
+		}catch(Exception e){
+			
+		}
+		
 	}
 }

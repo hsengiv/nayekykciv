@@ -132,5 +132,6 @@ User.logOut = function(){
 User.init = function(){
 	Topic.fetchConnectedTopics();
 	Topic.fetchAvailableTopics();
+	Socket.connect();
 }
 

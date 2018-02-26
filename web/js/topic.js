@@ -43,6 +43,8 @@ Topic.fetchConnectedTopics = function(){
 							var spanElement = document.createElement("span");
 							$(divElement).append(spanElement);
 							$(divElement).addClass("topicLIElement");
+							$(divElement).attr("id",topicJson.topicid);
+							$(divElement).attr("onclick","Topic.openTopic("+topicJson.topicid+")");
 							$(spanElement).text(topicJson.title);
 							if(User.userId == topicJson.creatorid){
 								$('#owntopiclist').append(liElement);
@@ -114,4 +116,12 @@ Topic.joinTopic = function(topicId){
 				}
 		};
 		Common.doAjax(ajaxData);
+}
+
+Topic.openTopic = function(topicId){
+	var title = $('#'+topicId).text();
+	$('#chatContainer').attr("topicid",topicId);
+	$('#currentChatTopicTitle').text(title);
+	$('#messagesList').html("");
+	$('#messageinputbox').val("");
 }

@@ -7,11 +7,16 @@ var Socket = {
 		$('#messagecontainer').append("Could not connect to server :|");
 	},
 	onMessage : function(event){
+		console.log(event.data)
+		var messageJson = JSON.parse(event.data);
+		if(messageJson.type === "topicmessage"){
+			Message.constructUIForMessage(messageJson);
+		}
 		$('#messagecontainer').append("<br>"+event.data);
 	},
 	connect : function(){
 		if(this.connectObject === undefined){
-			var url = "ws://"+window.location.host+"/chat/connect/"+User.userName;
+			var url = "ws://"+window.location.host+"/chat/connect/"+User.userId;
 			this.connectObject = new WebSocket(url);
 			this.connectObject.onopen = this.onOpen;
 			this.connectObject.onerror = this.onError;

@@ -131,4 +131,25 @@ public class TopicUtil {
 		}
 		return null;
 	}
+	
+	public static ArrayList<String> getAllRelatedUsersToTopic(String topicId){
+		try{
+			StringBuilder query = new StringBuilder();
+			ResultSet resultSet = null;
+			query.append("select * from TOPIC_USER_MAPPING where TOPIC_ID = ?");
+			ArrayList<String> values = new ArrayList<String>();
+			values.add(topicId);
+			CommonQuery dbConn = new CommonQuery(
+					CommonUtil.getCommonProperties("database_name", "USERINFO"));
+			resultSet = dbConn.executeSelect(query.toString(), values);
+			ArrayList<String> userList = new ArrayList<String>();
+			while(resultSet.next()){
+				userList.add(resultSet.getString("USER_ID"));
+			}
+			return userList;
+		}catch(Exception e){
+			
+		}
+		return null;
+	}
 }
