@@ -50,7 +50,7 @@ if(session.getAttribute("username") != null){
 
 			<div class="mytopiclistDiv" style="border-top: black;border-style: solid;border-left: none;border-bottom: none; border-right: none;">
 				<ul id="joinedtopiclist">
-					<li class="header">
+					<li class="topicheader">
 						Your participation
 					</li>
 				</ul>
